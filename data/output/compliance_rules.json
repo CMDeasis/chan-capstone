@@ -1,0 +1,49 @@
+{
+  "12": {
+    "section_name": "Lawful Processing Criteria",
+    "rules": [
+      "Data subject consent required for processing",
+      "Processing allowed for contract fulfillment",
+      "Processing required for legal compliance",
+      "Processing allowed for legitimate interests"
+    ],
+    "section": "12"
+  },
+  "13": {
+    "section_name": "Sensitive Information Processing",
+    "rules": [
+      "Sensitive information processing generally prohibited",
+      "Explicit consent required for sensitive information",
+      "Medical processing allowed with safeguards"
+    ],
+    "section": "13"
+  },
+  "16": {
+    "section_name": "Data Subject Rights",
+    "rules": [
+      "Data subjects must be informed of processing",
+      "Data subjects have right to access their data",
+      "Data subjects can correct inaccurate information"
+    ],
+    "section": "16"
+  },
+  "20": {
+    "section_name": "Security Requirements",
+    "rules": [
+      "Implement reasonable and appropriate security measures",
+      "Implement organizational security measures",
+      "Implement physical security measures",
+      "Implement technical security measures",
+      "Notify Commission and data subjects of breaches"
+    ],
+    "section": "20"
+  },
+  "21": {
+    "section_name": "Accountability Principle",
+    "rules": [
+      "Controllers responsible for data under their control",
+      "Ensure third party processors provide adequate protection"
+    ],
+    "section": "21"
+  }
+}

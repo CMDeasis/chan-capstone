@@ -1,0 +1,104 @@
+{
+  "a": {
+    "letter": "a",
+    "description": "Ensure compliance of personal information controllers with the provisions of this Act",
+    "full_content": "Ensure compliance of personal information controllers with the provisions of this Act;",
+    "section": "7"
+  },
+  "b": {
+    "letter": "b",
+    "description": "Receive complaints, institute investigations, facilitate or enable settlement of complaints through the use of alternative dispute resolution processes, adjudicate, award indemnity on matters affecting any personal information, prepare reports on disposition of complaints and resolution of any investigation it initiates, and, in cases it deems appropriate, publicize any such report: Provided, That in resolving any complaint or investigation (except where amicable settlement is reached by the parties), the Commission shall act as a collegial body. For this purpose, the Commission may be given access to personal information that is subject of any complaint and to collect the information necessary to perform its functions under this Act",
+    "full_content": "Receive complaints, institute investigations, facilitate or enable settlement of complaints through the use of alternative dispute resolution processes, adjudicate, award indemnity on matters affecting any personal information, prepare reports on disposition of complaints and resolution of any investigation it initiates, and, in cases it deems appropriate, publicize any such report: Provided, That in resolving any complaint or investigation (except where amicable settlement is reached by the parties), the Commission shall act as a collegial body. For this purpose, the Commission may be given access to personal information that is subject of any complaint and to collect the information necessary to perform its functions under this Act;",
+    "section": "7"
+  },
+  "c": {
+    "letter": "c",
+    "description": "Issue cease and desist orders, impose a temporary or permanent ban on the processing of personal information, upon finding that the processing will be detrimental to national security and public interest",
+    "full_content": "Issue cease and desist orders, impose a temporary or permanent ban on the processing of personal information, upon finding that the processing will be detrimental to national security and public interest;",
+    "section": "7"
+  },
+  "d": {
+    "letter": "d",
+    "description": "Compel or petition any entity, government agency or instrumentality to abide by its orders or take action on a matter affecting data privacy",
+    "full_content": "Compel or petition any entity, government agency or instrumentality to abide by its orders or take action on a matter affecting data privacy;",
+    "section": "7"
+  },
+  "e": {
+    "letter": "e",
+    "description": "Monitor the compliance of other government agencies or instrumentalities on their security and technical measures and recommend the necessary action in order to meet minimum standards for protection of personal information pursuant to this Act",
+    "full_content": "Monitor the compliance of other government agencies or instrumentalities on their security and technical measures and recommend the necessary action in order to meet minimum standards for protection of personal information pursuant to this Act;",
+    "section": "7"
+  },
+  "f": {
+    "letter": "f",
+    "description": "Coordinate with other government agencies and the private sector on efforts to formulate and implement plans and policies to strengthen the protection of personal information in the country",
+    "full_content": "Coordinate with other government agencies and the private sector on efforts to formulate and implement plans and policies to strengthen the protection of personal information in the country;",
+    "section": "7"
+  },
+  "g": {
+    "letter": "g",
+    "description": "Publish on a regular basis a guide to all laws relating to data protection",
+    "full_content": "Publish on a regular basis a guide to all laws relating to data protection;",
+    "section": "7"
+  },
+  "h": {
+    "letter": "h",
+    "description": "Publish a compilation of agency system of records and notices, including index and other finding aids",
+    "full_content": "Publish a compilation of agency system of records and notices, including index and other finding aids;",
+    "section": "7"
+  },
+  "i": {
+    "letter": "i",
+    "description": "Recommend to the Department of Justice (DOJ) the prosecution and imposition of penalties specified in Sections 25 to 29 of this Act",
+    "full_content": "Recommend to the Department of Justice (DOJ) the prosecution and imposition of penalties specified in Sections 25 to 29 of this Act;",
+    "section": "7"
+  },
+  "j": {
+    "letter": "j",
+    "description": "Review, approve, reject or require modification of privacy codes voluntarily adhered to by personal information controllers:Provided, That the privacy codes shall adhere to the underlying data privacy principles embodied in this Act: Provided, further,That such privacy codes may include private dispute resolution mechanisms for complaints against any participating personal information controller. For this purpose, the Commission shall consult with relevant regulatory agencies in the formulation and administration of privacy codes applying the standards set out in this Act, with respect to the persons, entities, business activities and business sectors that said regulatory bodies are authorized to principally regulate pursuant to the law: Provided, finally. That the Commission may review such privacy codes and require changes thereto for purposes of complying with this Act",
+    "full_content": "Review, approve, reject or require modification of privacy codes voluntarily adhered to by personal information controllers:Provided, That the privacy codes shall adhere to the underlying data privacy principles embodied in this Act: Provided, further,That such privacy codes may include private dispute resolution mechanisms for complaints against any participating personal information controller. For this purpose, the Commission shall consult with relevant regulatory agencies in the formulation and administration of privacy codes applying the standards set out in this Act, with respect to the persons, entities, business activities and business sectors that said regulatory bodies are authorized to principally regulate pursuant to the law: Provided, finally. That the Commission may review such privacy codes and require changes thereto for purposes of complying with this Act;",
+    "section": "7"
+  },
+  "k": {
+    "letter": "k",
+    "description": "Provide assistance on matters relating to privacy or data protection at the request of a national or local agency, a private entity or any person",
+    "full_content": "Provide assistance on matters relating to privacy or data protection at the request of a national or local agency, a private entity or any person;",
+    "section": "7"
+  },
+  "l": {
+    "letter": "l",
+    "description": "Comment on the implication on data privacy of proposed national or local statutes, regulations or procedures, issue advisory opinions and interpret the provisions of this Act and other data privacy laws",
+    "full_content": "Comment on the implication on data privacy of proposed national or local statutes, regulations or procedures, issue advisory opinions and interpret the provisions of this Act and other data privacy laws;",
+    "section": "7"
+  },
+  "m": {
+    "letter": "m",
+    "description": "Propose legislation, amendments or modifications to Philippine laws on privacy or data protection as may be necessary",
+    "full_content": "Propose legislation, amendments or modifications to Philippine laws on privacy or data protection as may be necessary;",
+    "section": "7"
+  },
+  "n": {
+    "letter": "n",
+    "description": "Ensure proper and effective coordination with data privacy regulators in other countries and private accountability agents, participate in international and regional initiatives for data privacy protection",
+    "full_content": "Ensure proper and effective coordination with data privacy regulators in other countries and private accountability agents, participate in international and regional initiatives for data privacy protection;",
+    "section": "7"
+  },
+  "o": {
+    "letter": "o",
+    "description": "Negotiate and contract with other data privacy authorities of other countries for cross-border application and implementation of respective privacy laws",
+    "full_content": "Negotiate and contract with other data privacy authorities of other countries for cross-border application and implementation of respective privacy laws;",
+    "section": "7"
+  },
+  "p": {
+    "letter": "p",
+    "description": "Assist Philippine companies doing business abroad to respond to foreign privacy or data protection laws and regulations",
+    "full_content": "Assist Philippine companies doing business abroad to respond to foreign privacy or data protection laws and regulations; and",
+    "section": "7"
+  },
+  "q": {
+    "letter": "q",
+    "description": "Generally perform such acts as may be necessary to facilitate cross-border enforcement of data privacy protection.",
+    "full_content": "Generally perform such acts as may be necessary to facilitate cross-border enforcement of data privacy protection.",
+    "section": "7"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "training_date": "2025-05-27T00:50:27.669803",
+  "source_file": "data-privacy-act/[REPUBLIC ACT NO. 10173].txt",
+  "statistics": {
+    "total_characters": 47352,
+    "total_sections": 44,
+    "definitions_extracted": 12,
+    "penalties_extracted": 12,
+    "rights_extracted": 6,
+    "npc_functions_extracted": 17,
+    "principles_extracted": 6,
+    "compliance_rules_generated": 5
+  },
+  "section_coverage": {
+    "definitions": "Section 3",
+    "npc_functions": "Section 7",
+    "processing_principles": "Section 11",
+    "lawful_processing": "Section 12",
+    "sensitive_information": "Section 13",
+    "data_subject_rights": "Section 16",
+    "security_requirements": "Section 20",
+    "accountability": "Section 21",
+    "penalties": "Sections 25-36"
+  },
+  "key_improvements": [
+    "100% accurate content from official DPA text",
+    "Comprehensive section parsing and structuring",
+    "Detailed definitions extraction",
+    "Complete penalty information",
+    "Structured data subject rights",
+    "NPC functions and responsibilities",
+    "Processing principles and compliance rules",
+    "Search index for quick lookups"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "a": {
+    "letter": "a",
+    "content": "Collected for specified and legitimate purposes determined and declared before, or as soon as reasonably practicable after collection, and later processed in a way compatible with such declared, specified and legitimate purposes only;",
+    "section": "11"
+  },
+  "b": {
+    "letter": "b",
+    "content": "Processed fairly and lawfully;",
+    "section": "11"
+  },
+  "c": {
+    "letter": "c",
+    "content": "Accurate, relevant and, where necessary for purposes for which it is to be used the processing of personal information, kept up to date; inaccurate or incomplete data must be rectified, supplemented, destroyed or their further processing restricted;",
+    "section": "11"
+  },
+  "d": {
+    "letter": "d",
+    "content": "Adequate and not excessive in relation to the purposes for which they are collected and processed;",
+    "section": "11"
+  },
+  "e": {
+    "letter": "e",
+    "content": "Retained only for as long as necessary for the fulfillment of the purposes for which the data was obtained or for the establishment, exercise or defense of legal claims, or for legitimate business purposes, or as provided by law; and",
+    "section": "11"
+  },
+  "f": {
+    "letter": "f",
+    "content": "Kept in a form which permits identification of data subjects for no longer than is necessary for the purposes for which the data were collected and processed: Provided, That personal information collected for other purposes may lie processed for historical, statistical or scientific purposes, and in cases laid down in law may be stored for longer periods: Provided, further,That adequate safeguards are guaranteed by said laws authorizing their processing. The personal information controller must ensure implementation of personal information processing principles set out herein.",
+    "section": "11"
+  }
+}

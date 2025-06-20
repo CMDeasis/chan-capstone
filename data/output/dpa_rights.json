@@ -1,0 +1,38 @@
+{
+  "a": {
+    "letter": "a",
+    "description": "Be informed whether personal information pertaining to him or her shall be, are being or have been processed",
+    "full_content": "Be informed whether personal information pertaining to him or her shall be, are being or have been processed;",
+    "section": "16"
+  },
+  "b": {
+    "letter": "b",
+    "description": "shall not apply should the personal information be needed pursuant to a subpoena or when the collection and processing are for obvious purposes, including when it is necessary for the performance of or in relation to a contract or service or when necessary or desirable in the context of an employer-employee relationship, between the collector and the data subject, or when the information is being collected and processed as a result of legal obligation",
+    "full_content": "shall not apply should the personal information be needed pursuant to a subpoena or when the collection and processing are for obvious purposes, including when it is necessary for the performance of or in relation to a contract or service or when necessary or desirable in the context of an employer-employee relationship, between the collector and the data subject, or when the information is being collected and processed as a result of legal obligation;",
+    "section": "16"
+  },
+  "c": {
+    "letter": "c",
+    "description": "Reasonable access to, upon demand, the following",
+    "full_content": "Reasonable access to, upon demand, the following: (1) Contents of his or her personal information that were processed; (2) Sources from which personal information were obtained; (3) Names and addresses of recipients of the personal information; (4) Manner by which such data were processed; (5) Reasons for the disclosure of the personal information to recipients; (6) Information on automated processes where the data will or likely to be made as the sole basis for any decision significantly affecting or will affect the data subject; (7) Date when his or her personal information concerning the data subject were last accessed and modified; and (8) The designation, or name or identity and address of the personal information controller;",
+    "section": "16"
+  },
+  "d": {
+    "letter": "d",
+    "description": "Dispute the inaccuracy or error in the personal information and have the personal information controller correct it immediately and accordingly, unless the request is vexatious or otherwise unreasonable. If the personal information have been corrected, the personal information controller shall ensure the accessibility of both the new and the retracted information and the simultaneous receipt of the new and the retracted information by recipients thereof",
+    "full_content": "Dispute the inaccuracy or error in the personal information and have the personal information controller correct it immediately and accordingly, unless the request is vexatious or otherwise unreasonable. If the personal information have been corrected, the personal information controller shall ensure the accessibility of both the new and the retracted information and the simultaneous receipt of the new and the retracted information by recipients thereof: Provided, That the third parties who have previously received such processed personal information shall he informed of its inaccuracy and its rectification upon reasonable request of the data subject;",
+    "section": "16"
+  },
+  "e": {
+    "letter": "e",
+    "description": "Suspend, withdraw or order the blocking, removal or destruction of his or her personal information from the personal information controller’s filing system upon discovery and substantial proof that the personal information are incomplete, outdated, false, unlawfully obtained, used for unauthorized purposes or are no longer necessary for the purposes for which they were collected. In this case, the personal information controller may notify third parties who have previously received such processed personal information",
+    "full_content": "Suspend, withdraw or order the blocking, removal or destruction of his or her personal information from the personal information controller’s filing system upon discovery and substantial proof that the personal information are incomplete, outdated, false, unlawfully obtained, used for unauthorized purposes or are no longer necessary for the purposes for which they were collected. In this case, the personal information controller may notify third parties who have previously received such processed personal information; and",
+    "section": "16"
+  },
+  "f": {
+    "letter": "f",
+    "description": "Be indemnified for any damages sustained due to such inaccurate, incomplete, outdated, false, unlawfully obtained or unauthorized use of personal information.",
+    "full_content": "Be indemnified for any damages sustained due to such inaccurate, incomplete, outdated, false, unlawfully obtained or unauthorized use of personal information.",
+    "section": "16"
+  }
+}

@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DPA Compliance Checker - Republic Act No. 10173</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Colors - shadcn inspired */
+            --background: 0 0% 100%;
+            --foreground: 222.2 84% 4.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 222.2 84% 4.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 222.2 84% 4.9%;
+            --primary: 221.2 83.2% 53.3%;
+            --primary-foreground: 210 40% 98%;
+            --secondary: 210 40% 96%;
+            --secondary-foreground: 222.2 84% 4.9%;
+            --muted: 210 40% 96%;
+            --muted-foreground: 215.4 16.3% 46.9%;
+            --accent: 210 40% 96%;
+            --accent-foreground: 222.2 84% 4.9%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 210 40% 98%;
+            --border: 214.3 31.8% 91.4%;
+            --input: 214.3 31.8% 91.4%;
+            --ring: 221.2 83.2% 53.3%;
+            --radius: 0.5rem;
+
+            /* Custom colors */
+            --success: 142.1 76.2% 36.3%;
+            --success-foreground: 355.7 100% 97.3%;
+            --warning: 32.2 95% 44.1%;
+            --warning-foreground: 355.7 100% 97.3%;
+            --info: 199.89 89.09% 48.04%;
+            --info-foreground: 355.7 100% 97.3%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            font-feature-settings: "rlig" 1, "calt" 1;
+        }
+
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: hsl(var(--background));
+        }
+
+        .header {
+            background: hsl(var(--card));
+            border-bottom: 1px solid hsl(var(--border));
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(8px);
+            z-index: 50;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: hsl(var(--primary));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: hsl(var(--primary-foreground));
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .header-text h1 {
+            color: hsl(var(--foreground));
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .header-text .subtitle {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+            font-weight: 400;
+            margin-top: 0.25rem;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-container {
+            background: hsl(var(--card));
+            border-top: 1px solid hsl(var(--border));
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tab-nav {
+            display: flex;
+            background: hsl(var(--muted) / 0.3);
+            border-bottom: 1px solid hsl(var(--border));
+            padding: 0.25rem;
+            gap: 0.25rem;
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: hsl(var(--muted-foreground));
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: calc(var(--radius) - 2px);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .tab-button:hover {
+            background: hsl(var(--accent));
+            color: hsl(var(--accent-foreground));
+        }
+
+        .tab-button.active {
+            background: hsl(var(--background));
+            color: hsl(var(--foreground));
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .tab-icon {
+            font-size: 1rem;
+        }
+
+        .tab-content {
+            flex: 1;
+            padding: 1.5rem;
+            background: hsl(var(--background));
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Upload Tab Styles */
+        .upload-area {
+            background: hsl(var(--card));
+            border: 2px dashed hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: hsl(var(--muted) / 0.3);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 1;
+        }
+
+        .upload-area:hover::before {
+            opacity: 1;
+        }
+
+        .upload-area:hover {
+            border-color: hsl(var(--primary));
+            background: hsl(var(--card));
+        }
+
+        .upload-area.dragover {
+            border-color: hsl(var(--success));
+            background: hsl(var(--success) / 0.05);
+        }
+
+        .upload-area.dragover::before {
+            background: hsl(var(--success) / 0.1);
+            opacity: 1;
+        }
+
+        .upload-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .upload-icon {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 auto 1.5rem;
+            background: hsl(var(--muted));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .upload-text h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: hsl(var(--foreground));
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-text p {
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 0.25rem;
+        }
+
+        .upload-text small {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.75rem;
+        }
+
+        .file-input-wrapper {
+            margin-top: 1.5rem;
+        }
+
+        .file-input {
+            position: absolute;
+            left: -9999px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border-radius: var(--radius);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            padding: 0.75rem 1.5rem;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        .btn-primary:hover {
+            background: hsl(var(--primary) / 0.9);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .btn-success {
+            background: hsl(var(--success));
+            color: hsl(var(--success-foreground));
+            padding: 0.875rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .btn-success:hover {
+            background: hsl(var(--success) / 0.9);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .selected-file {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .file-icon {
+            width: 3rem;
+            height: 3rem;
+            background: hsl(var(--success) / 0.1);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: hsl(var(--success));
+        }
+
+        .file-details h4 {
+            color: hsl(var(--foreground));
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .file-details p {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+        }
+
+        /* Results Tab Styles */
+        .status-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .status-card {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .status-card:hover {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .status-icon {
+            width: 3rem;
+            height: 3rem;
+            margin: 0 auto 1rem;
+            background: hsl(var(--muted));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .status-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: hsl(var(--muted-foreground));
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .status-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: hsl(var(--foreground));
+        }
+
+        /* Status Colors */
+        .compliant {
+            color: hsl(var(--success));
+        }
+        .compliant .status-icon {
+            background: hsl(var(--success) / 0.1);
+            color: hsl(var(--success));
+        }
+
+        .non-compliant {
+            color: hsl(var(--destructive));
+        }
+        .non-compliant .status-icon {
+            background: hsl(var(--destructive) / 0.1);
+            color: hsl(var(--destructive));
+        }
+
+        .risk-low {
+            color: hsl(var(--success));
+        }
+        .risk-low .status-icon {
+            background: hsl(var(--success) / 0.1);
+            color: hsl(var(--success));
+        }
+
+        .risk-medium {
+            color: hsl(var(--warning));
+        }
+        .risk-medium .status-icon {
+            background: hsl(var(--warning) / 0.1);
+            color: hsl(var(--warning));
+        }
+
+        .risk-high {
+            color: hsl(var(--destructive));
+        }
+        .risk-high .status-icon {
+            background: hsl(var(--destructive) / 0.1);
+            color: hsl(var(--destructive));
+        }
+
+        .risk-critical {
+            color: hsl(var(--destructive));
+        }
+        .risk-critical .status-icon {
+            background: hsl(var(--destructive) / 0.1);
+            color: hsl(var(--destructive));
+        }
+
+        /* Content Cards */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .content-card {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .content-card h3 {
+            color: hsl(var(--foreground));
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .violation-item, .recommendation-item, .pii-item {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .violation-item:hover, .recommendation-item:hover, .pii-item:hover {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .violation-item {
+            border-left-color: hsl(var(--destructive));
+            background: hsl(var(--destructive) / 0.02);
+        }
+
+        .recommendation-item {
+            border-left-color: hsl(var(--success));
+            background: hsl(var(--success) / 0.02);
+        }
+
+        .pii-item {
+            border-left-color: hsl(var(--info));
+            background: hsl(var(--info) / 0.02);
+        }
+
+        .pii-item.sensitive {
+            border-left-color: hsl(var(--destructive));
+            background: hsl(var(--destructive) / 0.02);
+        }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 3rem;
+            color: hsl(var(--muted-foreground));
+            min-height: 300px;
+        }
+
+        .loading h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: hsl(var(--foreground));
+        }
+
+        .loading-spinner {
+            width: 2rem;
+            height: 2rem;
+            border: 2px solid hsl(var(--muted));
+            border-top: 2px solid hsl(var(--primary));
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: hsl(var(--destructive) / 0.1);
+            color: hsl(var(--destructive));
+            border: 1px solid hsl(var(--destructive) / 0.2);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+        }
+
+        .error h3 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-section {
+            background: hsl(var(--success) / 0.05);
+            border: 1px solid hsl(var(--success) / 0.2);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .download-section h3 {
+            color: hsl(var(--foreground));
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-section p {
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 1rem;
+        }
+
+        .btn-download {
+            background: hsl(var(--success));
+            color: hsl(var(--success-foreground));
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: var(--radius);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        }
+
+        .btn-download:hover {
+            background: hsl(var(--success) / 0.9);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            text-decoration: none;
+            color: hsl(var(--success-foreground));
+        }
+
+        /* Badge Component */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: calc(var(--radius) - 2px);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .badge-destructive {
+            background: hsl(var(--destructive) / 0.1);
+            color: hsl(var(--destructive));
+        }
+
+        .badge-warning {
+            background: hsl(var(--warning) / 0.1);
+            color: hsl(var(--warning));
+        }
+
+        .badge-success {
+            background: hsl(var(--success) / 0.1);
+            color: hsl(var(--success));
+        }
+
+        .badge-secondary {
+            background: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        h4 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h5 {
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        p {
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+
+        small {
+            font-size: 0.75rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1rem;
+            }
+
+            .header-text h1 {
+                font-size: 1.25rem;
+            }
+
+            .header-text .subtitle {
+                font-size: 0.75rem;
+            }
+
+            .status-overview {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.75rem;
+            }
+
+            .status-card {
+                padding: 1rem;
+            }
+
+            .status-icon {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1.25rem;
+            }
+
+            .status-value {
+                font-size: 1.5rem;
+            }
+
+            .tab-content {
+                padding: 1rem;
+            }
+
+            .upload-area {
+                padding: 2rem 1rem;
+            }
+
+            .tab-button {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.75rem;
+            }
+
+            .tab-icon {
+                font-size: 0.875rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .status-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                gap: 0.5rem;
+            }
+
+            .logo {
+                width: 2rem;
+                height: 2rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* AI Enhancement Styles */
+        .analysis-banner {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .analysis-banner.ai-enhanced {
+            background: linear-gradient(135deg, hsl(var(--primary) / 0.05) 0%, hsl(var(--card)) 100%);
+            border-color: hsl(var(--primary) / 0.3);
+        }
+
+        .analysis-banner.traditional {
+            background: linear-gradient(135deg, hsl(var(--muted) / 0.3) 0%, hsl(var(--card)) 100%);
+        }
+
+        .ai-insights-section {
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .ai-insights-section h3 {
+            color: hsl(var(--primary));
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid hsl(var(--border));
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .insight-card {
+            background: hsl(var(--muted) / 0.3);
+            border-radius: var(--radius);
+            padding: 1rem;
+            border-left: 3px solid hsl(var(--primary));
+        }
+
+        .insight-card h4 {
+            color: hsl(var(--foreground));
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .insight-card p {
+            color: hsl(var(--muted-foreground));
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+        .insight-card ul {
+            margin: 0;
+            padding-left: 1rem;
+            color: hsl(var(--muted-foreground));
+            font-size: 0.875rem;
+        }
+
+        .insight-card li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="logo">⚖️</div>
+                <div class="header-text">
+                    <h1>DPA Compliance Checker</h1>
+                    <p class="subtitle">Republic Act No. 10173 - Data Privacy Act of 2012</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="tab-container">
+                <!-- Tab Navigation -->
+                <div class="tab-nav">
+                    <button class="tab-button active" data-tab="upload">
+                        <span class="tab-icon">📁</span>
+                        <span>Upload</span>
+                    </button>
+                    <button class="tab-button" data-tab="results">
+                        <span class="tab-icon">📊</span>
+                        <span>Results</span>
+                    </button>
+                    <button class="tab-button" data-tab="violations">
+                        <span class="tab-icon">⚠️</span>
+                        <span>Violations</span>
+                    </button>
+                    <button class="tab-button" data-tab="recommendations">
+                        <span class="tab-icon">✅</span>
+                        <span>Recommendations</span>
+                    </button>
+                    <button class="tab-button" data-tab="pii">
+                        <span class="tab-icon">🔍</span>
+                        <span>PII Details</span>
+                    </button>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <!-- Upload Tab -->
+                    <div class="tab-pane active" id="upload-tab">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-content">
+                                <div class="upload-icon">📄</div>
+                                <div class="upload-text">
+                                    <h3>Upload Document for DPA Compliance Analysis</h3>
+                                    <p>Drag and drop your file here or click to browse</p>
+                                    <small>Supported formats: PDF, DOCX, JPG, PNG, GIF, BMP, TIFF (Max 10MB)</small>
+                                    <div style="margin-top: 0.5rem; padding: 0.5rem; background: hsl(var(--primary) / 0.1); border-radius: var(--radius); font-size: 0.875rem;">
+                                        🤖 <strong>AI Vision:</strong> Images analyzed with Pixtral-12B for enhanced accuracy
+                                    </div>
+                                </div>
+                                <div class="file-input-wrapper">
+                                    <input type="file" id="fileInput" name="document" accept=".pdf,.docx,.jpg,.jpeg,.png,.gif,.bmp,.tiff,.webp" class="file-input">
+                                    <button type="button" class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                                        📁 Choose File
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="selectedFile" class="selected-file" style="display: none;">
+                            <div class="file-info">
+                                <div class="file-icon">📄</div>
+                                <div class="file-details">
+                                    <h4 id="fileName"></h4>
+                                    <p id="fileSize"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center;">
+                            <button id="analyzeBtn" class="btn btn-success" style="display: none;">
+                                🔍 Analyze Document
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Results Tab -->
+                    <div class="tab-pane" id="results-tab">
+                        <div id="resultsContent">
+                            <div class="loading">
+                                <h3>📋 Analysis Results</h3>
+                                <p>Upload a document to see compliance analysis results here.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Violations Tab -->
+                    <div class="tab-pane" id="violations-tab">
+                        <div id="violationsContent">
+                            <div class="loading">
+                                <h3>⚠️ DPA Violations</h3>
+                                <p>Upload a document to see identified violations here.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations Tab -->
+                    <div class="tab-pane" id="recommendations-tab">
+                        <div id="recommendationsContent">
+                            <div class="loading">
+                                <h3>✅ Compliance Recommendations</h3>
+                                <p>Upload a document to see recommendations here.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PII Details Tab -->
+                    <div class="tab-pane" id="pii-tab">
+                        <div id="piiContent">
+                            <div class="loading">
+                                <h3>🔍 Personal Information Detected</h3>
+                                <p>Upload a document to see PII analysis here.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentAnalysisData = null;
+
+        $(document).ready(function() {
+            // Tab switching functionality
+            $('.tab-button').on('click', function() {
+                var targetTab = $(this).data('tab');
+
+                // Update active tab button
+                $('.tab-button').removeClass('active');
+                $(this).addClass('active');
+
+                // Update active tab content
+                $('.tab-pane').removeClass('active');
+                $('#' + targetTab + '-tab').addClass('active');
+            });
+
+            // File input handling
+            $('#fileInput').on('change', function() {
+                var file = this.files[0];
+                if (file) {
+                    displaySelectedFile(file);
+                }
+            });
+
+            // Drag and drop functionality
+            var uploadArea = $('#uploadArea');
+
+            uploadArea.on('dragover', function(e) {
+                e.preventDefault();
+                $(this).addClass('dragover');
+            });
+
+            uploadArea.on('dragleave', function(e) {
+                e.preventDefault();
+                $(this).removeClass('dragover');
+            });
+
+            uploadArea.on('drop', function(e) {
+                e.preventDefault();
+                $(this).removeClass('dragover');
+
+                var files = e.originalEvent.dataTransfer.files;
+                if (files.length > 0) {
+                    var file = files[0];
+                    $('#fileInput')[0].files = files;
+                    displaySelectedFile(file);
+                }
+            });
+
+            // Analyze button click
+            $('#analyzeBtn').on('click', function() {
+                var fileInput = $('#fileInput')[0];
+                if (!fileInput.files || fileInput.files.length === 0) {
+                    alert('Please select a file first.');
+                    return;
+                }
+
+                analyzeDocument();
+            });
+        });
+
+        function displaySelectedFile(file) {
+            var fileName = file.name;
+            var fileSize = formatFileSize(file.size);
+
+            $('#fileName').text(fileName);
+            $('#fileSize').text(fileSize);
+            $('#selectedFile').show();
+            $('#analyzeBtn').show();
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            var k = 1024;
+            var sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            var i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function analyzeDocument() {
+            var formData = new FormData();
+            var fileInput = $('#fileInput')[0];
+            formData.append('document', fileInput.files[0]);
+
+            // Show loading in all tabs
+            showLoading();
+
+            // Switch to results tab
+            $('.tab-button[data-tab="results"]').click();
+
+            $.ajax({
+                url: '/analyze',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.status === 'success') {
+                        currentAnalysisData = response;
+                        displayResults(response);
+                    } else {
+                        showError(response.message || 'Analysis failed');
+                    }
+                },
+                error: function(xhr) {
+                    showError(xhr.responseJSON?.message || 'Server error occurred');
+                }
+            });
+        }
+
+        function showLoading() {
+            var loadingHtml = '<div class="loading"><div class="loading-spinner"></div><p>Analyzing document... Please wait.</p></div>';
+
+            $('#resultsContent').html(loadingHtml);
+            $('#violationsContent').html('<div class="loading"><h3>⚠️ Analyzing for violations...</h3></div>');
+            $('#recommendationsContent').html('<div class="loading"><h3>✅ Generating recommendations...</h3></div>');
+            $('#piiContent').html('<div class="loading"><h3>🔍 Detecting personal information...</h3></div>');
+        }
+
+        function showError(message) {
+            var errorHtml = '<div class="error"><h3>❌ Analysis Error</h3><p>' + message + '</p></div>';
+            $('#resultsContent').html(errorHtml);
+        }
+
+        function displayResults(response) {
+            // Results Tab
+            displayResultsTab(response);
+
+            // Violations Tab
+            displayViolationsTab(response);
+
+            // Recommendations Tab
+            displayRecommendationsTab(response);
+
+            // PII Tab
+            displayPIITab(response);
+        }
+
+        function displayResultsTab(response) {
+            var html = '';
+
+            // Analysis Type Banner
+            var analysisType = response.analysis_type || 'Traditional';
+            var isVisionAnalysis = analysisType.includes('vision');
+            var isAiEnhanced = analysisType.includes('AI') || analysisType.includes('ai');
+            var bannerClass = isAiEnhanced ? 'ai-enhanced' : 'traditional';
+
+            html += '<div class="analysis-banner ' + bannerClass + '">';
+            html += '<div style="display: flex; align-items: center; gap: 0.5rem;">';
+
+            var icon = '📊'; // Default
+            if (isVisionAnalysis) {
+                icon = '👁️';
+            } else if (isAiEnhanced) {
+                icon = '🤖';
+            }
+
+            html += '<span style="font-size: 1.5rem;">' + icon + '</span>';
+            html += '<div>';
+
+            var displayType = analysisType;
+            if (isVisionAnalysis) {
+                displayType = 'AI Vision Analysis';
+            } else if (isAiEnhanced) {
+                displayType = 'AI-Enhanced Analysis';
+            }
+
+            html += '<h4 style="margin: 0;">' + displayType + '</h4>';
+
+            if (isVisionAnalysis) {
+                html += '<p style="margin: 0; font-size: 0.875rem;">Powered by Pixtral-12B Vision + DPA Knowledge Base</p>';
+            } else if (isAiEnhanced) {
+                html += '<p style="margin: 0; font-size: 0.875rem;">Powered by Mistral AI + DPA Knowledge Base</p>';
+            } else {
+                html += '<p style="margin: 0; font-size: 0.875rem;">Traditional Rule-Based Analysis</p>';
+            }
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            // Status Overview Cards
+            html += '<div class="status-overview">';
+
+            // Compliance Status Card
+            var statusClass = response.compliance_status === 'COMPLIANT' ? 'compliant' : 'non-compliant';
+            var statusIcon = response.compliance_status === 'COMPLIANT' ? '✅' : '❌';
+            html += '<div class="status-card ' + statusClass + '">';
+            html += '<div class="status-icon">' + statusIcon + '</div>';
+            html += '<div class="status-title">Compliance Status</div>';
+            html += '<div class="status-value">' + response.compliance_status + '</div>';
+            html += '</div>';
+
+            // Risk Level Card
+            var riskClass = 'risk-' + response.risk_level.toLowerCase();
+            var riskIcon = getRiskIcon(response.risk_level);
+            html += '<div class="status-card ' + riskClass + '">';
+            html += '<div class="status-icon">' + riskIcon + '</div>';
+            html += '<div class="status-title">Risk Level</div>';
+            html += '<div class="status-value">' + response.risk_level + '</div>';
+            if (response.ai_risk_level && response.ai_risk_level !== response.risk_level) {
+                html += '<small>AI: ' + response.ai_risk_level + '</small>';
+            }
+            html += '</div>';
+
+            // Violations Count Card
+            var violationClass = response.violations.length > 0 ? 'non-compliant' : 'compliant';
+            html += '<div class="status-card">';
+            html += '<div class="status-icon">⚠️</div>';
+            html += '<div class="status-title">Violations Found</div>';
+            html += '<div class="status-value ' + violationClass + '">' + response.violations.length + '</div>';
+            if (response.ai_detected_violations > 0) {
+                html += '<small>(' + response.ai_detected_violations + ' AI-detected)</small>';
+            }
+            html += '</div>';
+
+            // PII Count Card
+            var piiClass = response.pii_summary.sensitive_count > 0 ? 'risk-high' : 'risk-low';
+            html += '<div class="status-card">';
+            html += '<div class="status-icon">🔍</div>';
+            html += '<div class="status-title">PII Instances</div>';
+            html += '<div class="status-value">' + response.pii_summary.total_pii_count + '</div>';
+            if (response.pii_summary.sensitive_count > 0) {
+                html += '<small>(' + response.pii_summary.sensitive_count + ' sensitive)</small>';
+            }
+            html += '</div>';
+
+            html += '</div>';
+
+            // AI Insights Section (if available)
+            if (response.ai_insights) {
+                html += '<div class="ai-insights-section">';
+                html += '<h3>🤖 AI Analysis Insights</h3>';
+                html += '<div class="insights-grid">';
+
+                html += '<div class="insight-card">';
+                html += '<h4>📄 Document Type</h4>';
+                html += '<p>' + (response.ai_document_type || 'Unknown') + '</p>';
+                html += '</div>';
+
+                html += '<div class="insight-card">';
+                html += '<h4>🎯 Processing Purpose</h4>';
+                html += '<p>' + (response.ai_processing_purpose || 'Not specified') + '</p>';
+                html += '</div>';
+
+                if (response.ai_insights.compliance_gaps && response.ai_insights.compliance_gaps.length > 0) {
+                    html += '<div class="insight-card">';
+                    html += '<h4>⚠️ Compliance Gaps</h4>';
+                    html += '<ul>';
+                    response.ai_insights.compliance_gaps.forEach(function(gap) {
+                        html += '<li>' + gap + '</li>';
+                    });
+                    html += '</ul>';
+                    html += '</div>';
+                }
+
+                html += '</div>';
+                html += '</div>';
+            }
+
+            // Download Section
+            if (response.report_filename) {
+                html += '<div class="download-section">';
+                html += '<h3>📄 Detailed Compliance Report</h3>';
+                html += '<p>Download a comprehensive PDF report with detailed analysis and legal references.</p>';
+                html += '<a href="/download_report/' + response.report_filename + '" class="btn-download">📥 Download PDF Report</a>';
+                html += '</div>';
+            }
+
+            $('#resultsContent').html(html);
+        }
+
+        function displayViolationsTab(response) {
+            var html = '';
+
+            if (response.violations.length === 0) {
+                html += '<div class="loading">';
+                html += '<div style="font-size: 4em; margin-bottom: 1rem;">✅</div>';
+                html += '<h3>No DPA Violations Found</h3>';
+                html += '<p>The document appears to be compliant with the Data Privacy Act requirements.</p>';
+                html += '</div>';
+            } else {
+                html += '<div style="margin-bottom: 1.5rem;">';
+                html += '<h3>⚠️ DPA Violations Identified</h3>';
+                html += '<p>Found ' + response.violations.length + ' violation(s) that require attention.</p>';
+                html += '</div>';
+
+                response.violations.forEach(function(violation, index) {
+                    var severityBadge = getSeverityBadge(violation.severity);
+                    html += '<div class="violation-item">';
+                    html += '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
+                    html += '<h4 style="margin: 0; flex: 1;">' + violation.section + ': ' + violation.title + '</h4>';
+                    html += severityBadge;
+                    html += '</div>';
+
+                    html += '<p style="margin-bottom: 0.5rem;"><strong>Description:</strong> ' + violation.description + '</p>';
+                    html += '<p style="margin-bottom: 0.75rem;"><strong>Details:</strong> ' + violation.details + '</p>';
+
+                    if (violation.affected_data && violation.affected_data.length > 0) {
+                        html += '<div style="margin-bottom: 0.75rem;">';
+                        html += '<strong>Affected Data:</strong>';
+                        html += '<ul style="margin: 0.25rem 0 0 1.5rem;">';
+                        violation.affected_data.forEach(function(data) {
+                            html += '<li>' + data + '</li>';
+                        });
+                        html += '</ul>';
+                        html += '</div>';
+                    }
+
+                    if (violation.dpa_reference) {
+                        html += '<div style="background: hsl(var(--muted) / 0.5); padding: 0.75rem; border-radius: var(--radius); margin-top: 0.75rem;">';
+                        html += '<strong>DPA Reference:</strong><br>';
+                        html += '<em style="font-size: 0.875rem;">' + violation.dpa_reference + '</em>';
+                        html += '</div>';
+                    }
+
+                    html += '</div>';
+                });
+            }
+
+            $('#violationsContent').html(html);
+        }
+
+        function displayRecommendationsTab(response) {
+            var html = '';
+
+            if (response.recommendations.length === 0) {
+                html += '<div class="loading">';
+                html += '<div style="font-size: 4em; margin-bottom: 1rem;">✅</div>';
+                html += '<h3>No Specific Recommendations</h3>';
+                html += '<p>The document appears to be well-structured for DPA compliance.</p>';
+                html += '</div>';
+            } else {
+                html += '<div style="margin-bottom: 1.5rem;">';
+                html += '<h3>✅ Compliance Recommendations</h3>';
+                html += '<p>Found ' + response.recommendations.length + ' recommendation(s) to improve compliance.</p>';
+                html += '</div>';
+
+                // Group recommendations by priority
+                var priorities = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'];
+
+                priorities.forEach(function(priority) {
+                    var priorityRecs = response.recommendations.filter(function(rec) {
+                        return rec.priority === priority;
+                    });
+
+                    if (priorityRecs.length > 0) {
+                        html += '<div style="margin-bottom: 1.5rem;">';
+                        html += '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">';
+                        html += '<h4 style="margin: 0;">' + getPriorityIcon(priority) + ' ' + priority + ' Priority</h4>';
+                        html += '<span class="badge badge-secondary">' + priorityRecs.length + '</span>';
+                        html += '</div>';
+
+                        priorityRecs.forEach(function(rec) {
+                            html += '<div class="recommendation-item">';
+                            html += '<div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">';
+                            html += '<h5 style="margin: 0; flex: 1;">' + rec.action + '</h5>';
+                            html += getPriorityBadge(rec.priority);
+                            html += '</div>';
+                            html += '<p style="margin-bottom: 0.5rem;"><strong>Description:</strong> ' + rec.description + '</p>';
+                            html += '<p style="margin: 0;"><strong>Reference:</strong> ' + rec.section_reference + '</p>';
+                            html += '</div>';
+                        });
+
+                        html += '</div>';
+                    }
+                });
+            }
+
+            $('#recommendationsContent').html(html);
+        }
+
+        function displayPIITab(response) {
+            var html = '';
+
+            if (response.pii_summary.total_pii_count === 0) {
+                html += '<div class="loading">';
+                html += '<div style="font-size: 4em; margin-bottom: 20px;">🔍</div>';
+                html += '<h3>No Personal Information Detected</h3>';
+                html += '<p>No personally identifiable information was found in the document.</p>';
+                html += '</div>';
+            } else {
+                // PII Summary
+                html += '<div class="status-overview">';
+
+                html += '<div class="status-card">';
+                html += '<div class="status-icon">📊</div>';
+                html += '<div class="status-title">Total PII</div>';
+                html += '<div class="status-value">' + response.pii_summary.total_pii_count + '</div>';
+                html += '</div>';
+
+                html += '<div class="status-card">';
+                html += '<div class="status-icon">🔒</div>';
+                html += '<div class="status-title">Sensitive PII</div>';
+                html += '<div class="status-value risk-high">' + response.pii_summary.sensitive_count + '</div>';
+                html += '</div>';
+
+                html += '<div class="status-card">';
+                html += '<div class="status-icon">📝</div>';
+                html += '<div class="status-title">Regular PII</div>';
+                html += '<div class="status-value">' + response.pii_summary.regular_count + '</div>';
+                html += '</div>';
+
+                html += '</div>';
+
+                // Content Grid
+                html += '<div class="content-grid">';
+
+                // Regular PII
+                html += '<div class="content-card">';
+                html += '<h3>📝 Regular Personal Information</h3>';
+
+                if (response.pii_summary.regular_pii && response.pii_summary.regular_pii.length > 0) {
+                    response.pii_summary.regular_pii.forEach(function(pii) {
+                        html += '<div class="pii-item">';
+                        html += '<strong>' + pii.entity_type + ':</strong> ' + pii.text;
+                        html += '<br><small>Confidence: ' + (pii.confidence * 100).toFixed(0) + '%</small>';
+                        html += '</div>';
+                    });
+                } else {
+                    html += '<p>No regular PII detected.</p>';
+                }
+
+                html += '</div>';
+
+                // Sensitive PII
+                html += '<div class="content-card">';
+                html += '<h3>🔒 Sensitive Personal Information</h3>';
+
+                if (response.pii_summary.sensitive_pii && response.pii_summary.sensitive_pii.length > 0) {
+                    response.pii_summary.sensitive_pii.forEach(function(pii) {
+                        html += '<div class="pii-item sensitive">';
+                        html += '<strong>' + pii.entity_type + ':</strong> ' + pii.text;
+                        html += '<br><small>Confidence: ' + (pii.confidence * 100).toFixed(0) + '%</small>';
+                        html += '</div>';
+                    });
+                } else {
+                    html += '<p>No sensitive PII detected.</p>';
+                }
+
+                html += '</div>';
+                html += '</div>';
+            }
+
+            $('#piiContent').html(html);
+        }
+
+        // Helper functions
+        function getRiskIcon(riskLevel) {
+            switch(riskLevel) {
+                case 'LOW': return '🟢';
+                case 'MEDIUM': return '🟡';
+                case 'HIGH': return '🟠';
+                case 'CRITICAL': return '🔴';
+                default: return '⚪';
+            }
+        }
+
+        function getSeverityIcon(severity) {
+            switch(severity) {
+                case 'LOW': return '🟡';
+                case 'MEDIUM': return '🟠';
+                case 'HIGH': return '🔴';
+                case 'CRITICAL': return '💀';
+                default: return '⚪';
+            }
+        }
+
+        function getPriorityIcon(priority) {
+            switch(priority) {
+                case 'LOW': return '🟢';
+                case 'MEDIUM': return '🟡';
+                case 'HIGH': return '🟠';
+                case 'CRITICAL': return '🔴';
+                default: return '⚪';
+            }
+        }
+
+        function getSeverityBadge(severity) {
+            var badgeClass = '';
+            switch(severity) {
+                case 'LOW': badgeClass = 'badge-secondary'; break;
+                case 'MEDIUM': badgeClass = 'badge-warning'; break;
+                case 'HIGH': badgeClass = 'badge-destructive'; break;
+                case 'CRITICAL': badgeClass = 'badge-destructive'; break;
+                default: badgeClass = 'badge-secondary';
+            }
+            return '<span class="badge ' + badgeClass + '">' + severity + '</span>';
+        }
+
+        function getPriorityBadge(priority) {
+            var badgeClass = '';
+            switch(priority) {
+                case 'LOW': badgeClass = 'badge-secondary'; break;
+                case 'MEDIUM': badgeClass = 'badge-warning'; break;
+                case 'HIGH': badgeClass = 'badge-warning'; break;
+                case 'CRITICAL': badgeClass = 'badge-destructive'; break;
+                default: badgeClass = 'badge-secondary';
+            }
+            return '<span class="badge ' + badgeClass + '">' + priority + '</span>';
+        }
+    </script>
+</body>
+</html>
